@@ -10,6 +10,7 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 
 </head>
 
@@ -22,31 +23,115 @@
     <main>
         <div class="container py-5">
             <div class="form-group">
-                <form id="addBook">
+                <form name="formPendaftaran" id="formPendaftaran" method="post" onsubmit="return validateForm()">
                     <div class="mb-3">
-                        <label for="newBooks" class="form-label">Judul Buku</label>
-                        <input type="text" class="form-control" id="newBookName" placeholder="Judul Buku Anda"
-                            aria-describedby="title">
+                        <label for="nrp">
+                            NRP
+                        </label>
+                        <input class="form-control required" id="nrp" type="text" placeholder="Masukkan NRP" maxlength="14" name="nrp" />
                     </div>
-                    <br>
-                    <input type="button" id="btnAdd" value="Submit" class="btn btn-primary">
                     <div class="mb-3">
-                        <label for="bookList" class="form-label mt-4">List Buku</label>
-                        <select id="DDLbook" class="form-control">
-                            <option value="">Pilih</option>
-                        </select>
+                        <label for="name">
+                            Nama
+                        </label>
+                        <input class="form-control required" id="name" type="name" placeholder="Nama" name="name" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="alamat">
+                            Alamat
+                        </label>
+                        <textarea class="form-control" id="alamat" type="text" placeholder="Alamat" name="alamat"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tgl_lahir">
+                            Tanggal Lahir
+                        </label>
+                        <input class="form-control required" id="tgl_lahir" type="date" placeholder="tgl_lahir" name="tgl_lahir" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="umur">
+                            Umur
+                        </label>
+                        <input class="form-control" id="umur" type="number" placeholder="Umur" name="umur" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="email">
+                            Email
+                        </label>
+                        <input class="form-control required" id="email" type="email" placeholder="Email" name="email" />
+                    </div>
+                    <div class="mb-4 md:flex md:justify-between">
+                        <div class="mb-4 md:mr-2 md:mb-0">
+                            <label for="password1">
+                                Password
+                            </label>
+                            <input class="form-control required" id="password1" type="password" placeholder="Masukkan Password" name="password" />
+                        </div>
+                        <div class="md:ml-2">
+                            <label for="confirmPassword">
+                                Konfirmasi Password
+                            </label>
+                            <input class="form-control required" id="confirmPassword" type="password" placeholder="Ulangi Password" name="confirmPassword" />
+                        </div>
+                    </div>
+                    <div class="btn-submit">
+                        <button class="submit btn btn-primary" type="button" id="submitForm">
+                            Simpan
+                        </button>
                     </div>
                 </form>
+                </div>
+                <div class="mt-lg-5">
+                    <a href="index.html">
+                        <button class="btn btn-primary">Go Back To Home Page</button>
+                    </a>
+                </div>
             </div>
         </div>
     </main>
-    <script>
-        $('#btnAdd').click(function () {
-            var addbook = $('#newBookName').val();
-            $('#DDLbook').append(new Option(addbook, addbook));
-            alert('Book Added!')
-        })
-    </script>
+ <script type="text/javascript">
+    $(document).ready(function validateForm() {
+        $('#formPendaftaran').validate({
+            rules: {
+                nrp: {
+                    digits: true,
+                    minlength: 3,
+                    maxlength: 14
+                },
+                name: {
+                    required: true
+                },
+                umur: {
+                    digits: true,
+                    range: [0, 100]
+                },
+                email: {
+                    email: true
+                },
+                confirmPassword: {
+                    equalTo: "#password1"
+                },
+            },
+            messages: {
+                name: {
+                    required: "name Harus Diisi"
+                },
+                nrp: {
+                    required: "Kolom NRP Harus Diisi",
+                    minlength: "Kolom NRP harus terdiri minimal 3 digit",
+                    maxlength: "Kolom NRP harus terdiri maksimal 14 digit"
+                },
+                email: {
+                    required: "Alamat email harus diisi",
+                    email: "Format email tidak valid"
+                },
+                confirmPassword: {
+                    equalTo: "Password tidak sama"
+                }
+            }
+        });
+    });
+</script>
 </body>
 
 </html>
